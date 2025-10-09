@@ -11,7 +11,9 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import com.nile.pantelis.mynotesapp.data.demoNotes
 import com.nile.pantelis.mynotesapp.ui.theme.MyNotesAppTheme
+import com.nile.pantelis.mynotesapp.view.NotesList
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -20,9 +22,9 @@ class MainActivity : ComponentActivity() {
         setContent {
             MyNotesAppTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    Greeting(
-                        name = "Android",
-                        modifier = Modifier.padding(innerPadding)
+                    NotesList(
+                        modifier = Modifier.padding(innerPadding),
+                        notes = demoNotes
                     )
                 }
             }
@@ -36,12 +38,4 @@ fun Greeting(name: String, modifier: Modifier = Modifier) {
         text = "Hello $name!",
         modifier = modifier
     )
-}
-
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    MyNotesAppTheme {
-        Greeting("Android")
-    }
 }

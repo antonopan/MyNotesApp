@@ -1,6 +1,7 @@
 package com.nile.pantelis.mynotesapp.view
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.aspectRatio
@@ -27,6 +28,9 @@ fun NoteCard(note: Note) {
             .clip(shape = RoundedCornerShape(8.dp))
             .background(color = Color.Gray)
             .padding(4.dp)
+//            .clickable(
+//                onClick = TODO()
+//            )
 
     ){
         Column(

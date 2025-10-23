@@ -10,10 +10,11 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
 import com.nile.pantelis.mynotesapp.data.demoNotes
 import com.nile.pantelis.mynotesapp.ui.theme.MyNotesAppTheme
+import com.nile.pantelis.mynotesapp.view.AddButton
 import com.nile.pantelis.mynotesapp.view.NotesList
+
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -21,7 +22,9 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             MyNotesAppTheme {
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
+                Scaffold(modifier = Modifier.fillMaxSize(),
+                    floatingActionButton = { AddButton(
+                    onClick = { })  }) { innerPadding ->
                     NotesList(
                         modifier = Modifier.padding(innerPadding),
                         notes = demoNotes

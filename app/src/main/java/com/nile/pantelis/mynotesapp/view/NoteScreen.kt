@@ -22,17 +22,21 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.nile.pantelis.mynotesapp.domain.AppState
 
 @Composable
 fun NoteScreen(
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    viewModel: NoteViewModel = NoteViewModel()
 ) {
+
     Box(
         modifier = Modifier
             .fillMaxSize()
             .padding(12.dp)
     ) {
         Column() {
+            RemButton (onClick = {viewModel.switchScreen(state = AppState.ViewScreen)})
             TextField(
                 value = "text",
                 onValueChange = { "text = it" },
@@ -68,6 +72,8 @@ fun NoteScreen(
         }
     }
 }
+
+
 
 @Preview
 @Composable

@@ -11,9 +11,13 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import com.nile.pantelis.mynotesapp.data.demoNotes
+import com.nile.pantelis.mynotesapp.domain.AppState
 import com.nile.pantelis.mynotesapp.ui.theme.MyNotesAppTheme
 import com.nile.pantelis.mynotesapp.view.AddButton
+import com.nile.pantelis.mynotesapp.view.MainNotesList
+import com.nile.pantelis.mynotesapp.view.NoteViewModel
 import com.nile.pantelis.mynotesapp.view.NotesList
+import com.nile.pantelis.mynotesapp.view.ScreenSelector
 
 
 class MainActivity : ComponentActivity() {
@@ -21,15 +25,12 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
+            val viewModel = NoteViewModel()
             MyNotesAppTheme {
-                Scaffold(modifier = Modifier.fillMaxSize(),
-                    floatingActionButton = { AddButton(
-                    onClick = { })  }) { innerPadding ->
-                    NotesList(
-                        modifier = Modifier.padding(innerPadding),
-                        notes = demoNotes
-                    )
-                }
+                ScreenSelector(
+                    viewModel = viewModel,
+                    modifier = Modifier
+                )
             }
         }
     }

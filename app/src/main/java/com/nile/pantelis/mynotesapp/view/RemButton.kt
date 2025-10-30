@@ -1,6 +1,5 @@
 package com.nile.pantelis.mynotesapp.view
 
-import android.util.Log
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Button
@@ -13,12 +12,12 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
 @Composable
-fun AddButton(onClick: () -> Unit) {
+fun RemButton(onClick: () -> Unit) {
     Button(
         modifier = Modifier.size(49.dp), onClick = onClick, shape= CircleShape
     ) {
         Text(
-            text = "+",
+            text = "<╯",
             textAlign = TextAlign.Center,
             fontSize = 28.sp,
             fontWeight = FontWeight.Bold

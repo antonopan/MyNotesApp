@@ -16,6 +16,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.nile.pantelis.mynotesapp.R
@@ -23,8 +24,7 @@ import com.nile.pantelis.mynotesapp.R
 @Composable
 fun TopBar(
     onBackPressed: () -> Unit,
-    onColorChangeButton: () -> Unit,
-    onThreeDotsButton: () -> Unit
+    onPinPressed: () -> Unit
 ) {
     Row(modifier = Modifier
         .fillMaxWidth()
@@ -40,32 +40,25 @@ fun TopBar(
                 contentDescription = "arrow_back",
             )
         }
-        Row {
+        Row (verticalAlignment = Alignment.CenterVertically) {
             Button(
                 modifier = Modifier
                     .padding(all = 3.dp)
                 ,
-                onClick = onColorChangeButton,
+                onClick = onPinPressed,
             ) {
                 Icon(
-                    painter = painterResource(R.drawable.palette),
-                    contentDescription = "palette",
-                )
-            }
-            Button(
-                modifier = Modifier
-                    .padding(all = 3.dp)
-                    .size(64.dp)
-                ,
-                onClick = onThreeDotsButton,
-                shape = CircleShape,
-            ) {
-                Icon(
-                    painter = painterResource(R.drawable.menu),
-                    contentDescription = "menu",
+                    painter = painterResource(R.drawable.pin),
+                    contentDescription = "pin",
                 )
             }
         }
     }
 
+}
+
+@Preview
+@Composable
+fun TopBarPreview() {
+    TopBar(onBackPressed = {}, onPinPressed = {})
 }

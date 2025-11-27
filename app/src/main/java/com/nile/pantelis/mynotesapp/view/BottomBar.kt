@@ -26,7 +26,7 @@ fun BottomBar(
             .fillMaxWidth()
             .padding(horizontal = 12.dp, vertical = 8.dp),
         horizontalArrangement = Arrangement.SpaceBetween,
-        verticalAlignment = Alignment.CenterVertically
+        verticalAlignment = Alignment.CenterVertically,
     ) {
         Row (verticalAlignment = Alignment.CenterVertically) {
             Button(

@@ -1,9 +1,12 @@
-@file:Suppress("INFERRED_TYPE_VARIABLE_INTO_EMPTY_INTERSECTION_WARNING",
+@file:Suppress(
+    "INFERRED_TYPE_VARIABLE_INTO_EMPTY_INTERSECTION_WARNING",
     "TYPE_INTERSECTION_AS_REIFIED_WARNING"
 )
 
 package com.nile.pantelis.mynotesapp.view
 
+import android.annotation.SuppressLint
+import android.util.Log
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -16,6 +19,10 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -24,11 +31,13 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.nile.pantelis.mynotesapp.domain.AppState
 import com.nile.pantelis.mynotesapp.view.viewmodels.NoteDataViewModel
 import com.nile.pantelis.mynotesapp.view.viewmodels.SwitchScreenViewModel
 
+@SuppressLint("UnrememberedMutableState")
 @Composable
 fun NoteScreen(
     modifier: Modifier = Modifier,
@@ -64,40 +73,54 @@ fun NoteScreen(
                     .padding(horizontal = 8.dp),
             )
 
-            Box (
-                modifier = Modifier
-                    .fillMaxSize(),
-                contentAlignment = Alignment.BottomEnd
-            ) {
 
+            val scrollState = rememberScrollState()
 
-                val scrollState = rememberScrollState()
-
-                TextField(
-                    value = "text this thing",
-                    onValueChange = { "text = it" },
+            TextField(
+                value = noteViewModel.contentState.value,
+                onValueChange = { noteViewModel.onContentChange(it) },
 //            label = { Text("Enter text") },
-                    placeholder = { Text("Start typing...") },
-                    textStyle = TextStyle(color = Color.Blue),
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .height(200.dp) // fixed visible height
-                        .verticalScroll(scrollState) // enable scrolling
-                        .padding(horizontal = 8.dp)
-                        .fillMaxSize(),
-                    singleLine = false
-                )
-                BottomBar(
-                    onColorButtonPressed = {},
-                    onTextFormatPressed = {},
-                    onMenuPressed = {}
-                )
-            }
+                placeholder = { Text("Start typing...") },
+                textStyle = TextStyle(color = Color.Blue),
+                modifier = Modifier
+                    .fillMaxSize()
+                    .height(200.dp) // fixed visible height
+                    .verticalScroll(scrollState) // enable scrolling
+                    .padding(horizontal = 8.dp)
+                    .fillMaxSize(),
+                singleLine = false
+            )
+
+        }
+
+        var openModal: Boolean by remember { mutableStateOf(false) }
+
+
+        Box(
+            modifier = Modifier
+                .fillMaxSize(),
+            contentAlignment = Alignment.BottomEnd
+        ) {
+            BottomBar(
+                onColorButtonPressed = {openModal = true},
+                onTextFormatPressed = {},
+                onMenuPressed = {}
+            )
+        }
+
+        if(openModal) {
+            ColorPicker(
+                closeModal = { openModal = changeModal(openModal) }
+            )
         }
     }
 }
 
-
+private fun changeModal(openModal: Boolean): Boolean {
+    // This function simply decides what the new state should be
+    Log.d("This", openModal.toString())
+    return !openModal
+}
 
 @Preview
 @Composable

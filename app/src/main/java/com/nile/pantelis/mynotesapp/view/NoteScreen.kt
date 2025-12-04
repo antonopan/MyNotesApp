@@ -44,6 +44,7 @@ fun NoteScreen(
     viewModel: SwitchScreenViewModel = viewModel(),
     noteViewModel: NoteDataViewModel = viewModel()
 ) {
+    var openModal: Boolean by remember { mutableStateOf(false) }
     Box(
         modifier = modifier
             .fillMaxSize()
@@ -60,14 +61,12 @@ fun NoteScreen(
             TextField(
                 value = noteViewModel.titleState.value,
                 onValueChange = { noteViewModel.onTitleChange(it) },
-//            label = { Text("Enter text") },
                 placeholder = { Text("Enter your title") },
+                maxLines = 2,
                 textStyle = TextStyle(
-                    color = Color.Blue,
                     fontWeight = FontWeight.Bold,
                     fontSize = 24.sp
                 ),
-                maxLines = 2, // Use this instead of lineLimits
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(horizontal = 8.dp),
@@ -79,21 +78,16 @@ fun NoteScreen(
             TextField(
                 value = noteViewModel.contentState.value,
                 onValueChange = { noteViewModel.onContentChange(it) },
-//            label = { Text("Enter text") },
                 placeholder = { Text("Start typing...") },
-                textStyle = TextStyle(color = Color.Blue),
                 modifier = Modifier
                     .fillMaxSize()
-                    .height(200.dp) // fixed visible height
-                    .verticalScroll(scrollState) // enable scrolling
-                    .padding(horizontal = 8.dp)
-                    .fillMaxSize(),
+                    .height(200.dp)
+                    .verticalScroll(scrollState)
+                    .padding(horizontal = 8.dp),
                 singleLine = false
             )
 
         }
-
-        var openModal: Boolean by remember { mutableStateOf(false) }
 
 
         Box(
@@ -107,12 +101,12 @@ fun NoteScreen(
                 onMenuPressed = {}
             )
         }
-
-        if(openModal) {
-            ColorPicker(
-                closeModal = { openModal = changeModal(openModal) }
-            )
-        }
+    }
+    if(openModal) {
+        ColorPicker(
+            closeModal = { openModal = changeModal(openModal) },
+            visible = openModal
+        )
     }
 }
 

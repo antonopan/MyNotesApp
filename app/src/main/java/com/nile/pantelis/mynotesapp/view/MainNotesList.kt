@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import com.nile.pantelis.mynotesapp.MainActivity
 import com.nile.pantelis.mynotesapp.data.demoNotes
 import com.nile.pantelis.mynotesapp.domain.AppState
 import com.nile.pantelis.mynotesapp.view.viewmodels.SwitchScreenViewModel
@@ -17,13 +18,18 @@ fun MainNotesList(
     Scaffold(modifier = modifier.fillMaxSize(),
         floatingActionButton = {
             AddButton(
-            onClick = { viewModel.switchScreen(AppState.WriteScreen) }
+                onClick = {
+                    viewModel.switchScreen(AppState.WriteScreen, )
+                    MainActivity.NotesViewModel.onTitleChange("Add Title")
+                    MainActivity.NotesViewModel.onContentChange("Add Contents")
+                }
             )
         })
     { innerPadding ->
         NotesList(
             modifier = Modifier.padding(innerPadding),
-            notes = demoNotes
+            notes = demoNotes,
+            viewModel = viewModel
         )
     }
 }

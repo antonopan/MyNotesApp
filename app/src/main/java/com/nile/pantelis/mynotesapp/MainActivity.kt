@@ -17,10 +17,15 @@ import androidx.compose.ui.Modifier
 import com.nile.pantelis.mynotesapp.ui.theme.MyNotesAppTheme
 import com.nile.pantelis.mynotesapp.view.viewmodels.SwitchScreenViewModel
 import com.nile.pantelis.mynotesapp.view.ScreenSelector
+import com.nile.pantelis.mynotesapp.view.viewmodels.NoteDataViewModel
 
 
 class MainActivity : ComponentActivity() {
 //    @SuppressLint("ViewModelConstructorInComposable")
+    companion object {
+        val NotesViewModel = NoteDataViewModel()
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()

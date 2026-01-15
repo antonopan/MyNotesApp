@@ -31,7 +31,7 @@ fun TopBar(
             Icon(
                 painter = painterResource(R.drawable.arrow_back),
                 contentDescription = "arrow_back",
-                tint = MaterialTheme.colorScheme.onPrimary // or onSurface if preferred
+                tint = MaterialTheme.colorScheme.onBackground // or onSurface if preferred
             )
         }
 
@@ -40,7 +40,7 @@ fun TopBar(
                 Icon(
                     painter = painterResource(R.drawable.pin),
                     contentDescription = "pin",
-                    tint = MaterialTheme.colorScheme.onPrimary
+                    tint = MaterialTheme.colorScheme.onBackground
                 )
             }
         }

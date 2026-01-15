@@ -5,7 +5,6 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.aspectRatio
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -20,7 +19,10 @@ import androidx.compose.ui.unit.dp
 import com.nile.pantelis.mynotesapp.data.Note
 
 @Composable
-fun NoteCard(note: Note) {
+fun NoteCard(
+    note: Note,
+    openNote: () -> Unit,
+) {
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -28,9 +30,11 @@ fun NoteCard(note: Note) {
             .clip(shape = RoundedCornerShape(8.dp))
             .background(color = Color.Gray)
             .padding(4.dp)
-//            .clickable(
-//                onClick = TODO()
-//            )
+            .clickable(
+                onClick = {
+                    openNote()
+                }
+            )
 
     ){
         Column(

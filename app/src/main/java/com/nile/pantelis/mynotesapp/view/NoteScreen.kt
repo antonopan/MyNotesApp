@@ -1,12 +1,8 @@
-@file:Suppress(
-    "INFERRED_TYPE_VARIABLE_INTO_EMPTY_INTERSECTION_WARNING",
-    "TYPE_INTERSECTION_AS_REIFIED_WARNING"
-)
-
 package com.nile.pantelis.mynotesapp.view
 
 import android.annotation.SuppressLint
 import android.util.Log
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -33,6 +29,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.nile.pantelis.mynotesapp.MainActivity
 import com.nile.pantelis.mynotesapp.domain.AppState
 import com.nile.pantelis.mynotesapp.view.viewmodels.NoteDataViewModel
 import com.nile.pantelis.mynotesapp.view.viewmodels.SwitchScreenViewModel
@@ -42,15 +39,19 @@ import com.nile.pantelis.mynotesapp.view.viewmodels.SwitchScreenViewModel
 fun NoteScreen(
     modifier: Modifier = Modifier,
     viewModel: SwitchScreenViewModel = viewModel(),
-    noteViewModel: NoteDataViewModel = viewModel()
 ) {
+    val noteViewModel = MainActivity.NotesViewModel
     var openModal: Boolean by remember { mutableStateOf(false) }
     Box(
         modifier = modifier
             .fillMaxSize()
             .padding(12.dp)
+
     ) {
-        Column() {
+        Column(
+            modifier = Modifier
+                .background(noteViewModel.colorState.value)
+        ) {
             Row {
                 TopBar(
                     onBackPressed = { viewModel.switchScreen(state = AppState.ViewScreen) },

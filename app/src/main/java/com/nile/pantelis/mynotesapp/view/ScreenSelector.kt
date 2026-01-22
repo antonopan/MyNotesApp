@@ -1,8 +1,11 @@
 package com.nile.pantelis.mynotesapp.view
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import com.nile.pantelis.mynotesapp.domain.AppState
 import com.nile.pantelis.mynotesapp.view.viewmodels.SwitchScreenViewModel
 

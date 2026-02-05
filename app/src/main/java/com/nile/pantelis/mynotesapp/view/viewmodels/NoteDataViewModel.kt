@@ -32,14 +32,7 @@ class NoteDataViewModel(private val db: NoteDatabase) : ViewModel() {
 //    val contentState: State<String> get() = _contentState
 //    val colorState: MutableState<Color> get() = _colorState
 
-    val defaultNote = Note(
-        id = 0,                        // 0 for new note, Room will assign real id
-        title = "Zouzounia",           // default title
-        content = "Foo",               // default content
-        category = null,               // optional category
-        color = 0xFF2C2C2E     // default color
-    )
-    private val noteDraft = MutableStateFlow<Note?>(null)
+    private val noteDraft = MutableStateFlow<Note?>(Note())
     var getAllNotes by mutableStateOf<List<Note>>(emptyList())
         private set
 

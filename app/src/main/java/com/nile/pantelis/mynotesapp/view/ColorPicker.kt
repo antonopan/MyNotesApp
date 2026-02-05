@@ -19,12 +19,14 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.nile.pantelis.mynotesapp.MainActivity
+import com.nile.pantelis.mynotesapp.view.viewmodels.NoteDataViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ColorPicker(
     closeModal: () -> Unit,
-    visible: Boolean
+    visible: Boolean,
+    notesViewModel: NoteDataViewModel
 ) {
     // Only compose the ModalBottomSheet if 'visible' is true
     if (!visible) return
@@ -81,7 +83,7 @@ fun ColorPicker(
                             .clip(CircleShape)
                             .background(color = colors[i])
                             .size(42.dp)
-                            .clickable(onClick = { MainActivity.NotesViewModel.onColorChange(colors[i])})
+                            .clickable(onClick = { notesViewModel.onColorChange(colors[i])})
                         ,
                     ){
 

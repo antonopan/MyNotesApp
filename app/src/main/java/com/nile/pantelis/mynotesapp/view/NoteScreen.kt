@@ -18,6 +18,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -31,7 +32,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.nile.pantelis.mynotesapp.MainActivity
 import com.nile.pantelis.mynotesapp.domain.AppState
@@ -42,17 +42,20 @@ import com.nile.pantelis.mynotesapp.view.viewmodels.SwitchScreenViewModel
 @Composable
 fun NoteScreen(
     modifier: Modifier = Modifier,
-    viewModel: SwitchScreenViewModel = viewModel(),
+    switchScreenViewModel: SwitchScreenViewModel = viewModel(),
+    notesViewModel: NoteDataViewModel
 ) {
-    val noteViewModel = MainActivity.NotesViewModel
     var openModal: Boolean by remember { mutableStateOf(false) }
     val color = MaterialTheme.colorScheme.background
+
+    val note by notesViewModel.currentNote.collectAsState()
+
     Box(
         modifier = modifier
             .fillMaxSize()
             .padding(12.dp)
             .clip(RoundedCornerShape(12.dp))
-            .background(MainActivity.NotesViewModel.colorState.value)
+            .background(Color((note?.color ?: 0xFF2C2C2E)))
 
     ) {
         Column(
@@ -61,15 +64,16 @@ fun NoteScreen(
             Row {
                 TopBar(
                     onBackPressed = {
-                        viewModel.switchScreen(state = AppState.ViewScreen)
+                        switchScreenViewModel.switchScreen(state = AppState.ViewScreen)
                                     },
                     onPinPressed = {}
                 )
             }
 
             TextField(
-                value = noteViewModel.titleState.value,
-                onValueChange = { noteViewModel.onTitleChange(it) },
+                value = note?.title ?:
+                "notesViewModel.defaultNote.title",
+                onValueChange = notesViewModel:: onTitleChange,
                 placeholder = { Text("Enter your title") },
                 maxLines = 2,
                 textStyle = TextStyle(
@@ -89,8 +93,9 @@ fun NoteScreen(
             val scrollState = rememberScrollState()
 
             TextField(
-                value = noteViewModel.contentState.value,
-                onValueChange = { noteViewModel.onContentChange(it) },
+                value = notesViewModel.currentNote.value?.content ?:
+                notesViewModel.defaultNote.content,
+                onValueChange = { notesViewModel.onContentChange(it) },
                 placeholder = { Text("Start typing...") },
                 modifier = Modifier
                     .fillMaxSize()
@@ -122,7 +127,8 @@ fun NoteScreen(
     if (openModal) {
         ColorPicker(
             closeModal = { openModal = changeModal(openModal) },
-            visible = openModal
+            visible = openModal,
+            notesViewModel = notesViewModel
         )
     }
 }
@@ -133,8 +139,8 @@ private fun changeModal(openModal: Boolean): Boolean {
     return !openModal
 }
 
-@Preview
-@Composable
-fun NoteScreenPreview() {
-    NoteScreen()
-}
+//@Preview
+//@Composable
+//fun NoteScreenPreview() {
+//    NoteScreen()
+//}

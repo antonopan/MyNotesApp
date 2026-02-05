@@ -4,32 +4,84 @@ import android.util.Log
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.State
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.graphics.Color
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.nile.pantelis.mynotesapp.data.Note
+import com.nile.pantelis.mynotesapp.data.NoteDatabase
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.debounce
+import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.filterNotNull
+import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.launch
 
-class NoteDataViewModel: ViewModel() {
+class NoteDataViewModel(private val db: NoteDatabase) : ViewModel() {
     // PRIVATE mutable states
-    private var _titleState = mutableStateOf("Zouzounia")
-    private var _contentState = mutableStateOf("Foo")
-    private var _colorState = mutableStateOf(Color(0xFF2C2C2E))
+//    private var _titleState = mutableStateOf("Zouzounia")
+//    private var _contentState = mutableStateOf("Foo")
+//    private var _colorState = mutableStateOf(Color(0xFF2C2C2E))
+//
+//    // PUBLIC read-only states
+//    val titleState: State<String> get() = _titleState
+//    val contentState: State<String> get() = _contentState
+//    val colorState: MutableState<Color> get() = _colorState
 
-    // PUBLIC read-only states
-    val titleState: State<String> get() = _titleState
-    val contentState: State<String> get() = _contentState
-    val colorState: MutableState<Color> get() = _colorState
+    val defaultNote = Note(
+        id = 0,                        // 0 for new note, Room will assign real id
+        title = "Zouzounia",           // default title
+        content = "Foo",               // default content
+        category = null,               // optional category
+        color = 0xFF2C2C2E     // default color
+    )
+    private val noteDraft = MutableStateFlow<Note?>(null)
+    var getAllNotes by mutableStateOf<List<Note>>(emptyList())
+        private set
+
+    val currentNote: StateFlow<Note?> = noteDraft
+
+
+    init {
+        viewModelScope.launch {
+            db.dao().getAll().collect { list ->
+                getAllNotes = list
+            }
+        }
+
+        viewModelScope.launch {
+            noteDraft
+                .filterNotNull()
+                .distinctUntilChanged()
+                .debounce(600) // 👈 save after user stops typing
+                .collect { note ->
+                    db.dao().upsertNote(note)
+                }
+        }
+    }
+
 
     // Update functions (recommended)
     fun onTitleChange(newValue: String) {
-        _titleState.value = newValue
-        Log.d("Hello", _titleState.value)
+        noteDraft.value = noteDraft.value?.copy(
+            title = newValue,
+        )
     }
 
     fun onContentChange(newValue: String) {
-        _contentState.value = newValue
+        noteDraft.value = noteDraft.value?.copy(
+            content = newValue,
+        )
     }
 
     fun onColorChange(newValue: Color) {
-        _colorState.value = newValue
+//        _colorState.value = newValue
+        noteDraft.value = noteDraft.value?.copy(
+            color = newValue.value.toLong(),
+        )
     }
-
 }

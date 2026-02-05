@@ -9,7 +9,6 @@ import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.nile.pantelis.mynotesapp.MainActivity
 import com.nile.pantelis.mynotesapp.data.Note
 import com.nile.pantelis.mynotesapp.domain.AppState
 import com.nile.pantelis.mynotesapp.view.viewmodels.NoteDataViewModel
@@ -20,9 +19,10 @@ import com.nile.pantelis.mynotesapp.view.viewmodels.SwitchScreenViewModel
 fun NotesList(
     notes: List<Note>,
     modifier: Modifier,
-    viewModel: SwitchScreenViewModel
+    switchScreenViewModel: SwitchScreenViewModel,
+    notesViewModel: NoteDataViewModel
 ) {
-    val noteViewModel = MainActivity.NotesViewModel
+    val noteViewModel = notesViewModel
     LazyVerticalGrid(
         columns = GridCells.Fixed(2), // 2 items per row
         contentPadding = PaddingValues(8.dp),
@@ -31,7 +31,7 @@ fun NotesList(
     ) {
         items(notes, ) { note ->
             NoteCard(note, {
-                viewModel.switchScreen(AppState.WriteScreen)
+                switchScreenViewModel.switchScreen(AppState.WriteScreen)
                 noteViewModel.onTitleChange(note.title)
                 noteViewModel.onContentChange(note.content)
 //                noteViewModel.onColorChange(note.Color)

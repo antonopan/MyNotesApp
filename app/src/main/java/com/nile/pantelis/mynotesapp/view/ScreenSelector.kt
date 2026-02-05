@@ -1,30 +1,35 @@
 package com.nile.pantelis.mynotesapp.view
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import com.nile.pantelis.mynotesapp.domain.AppState
+import com.nile.pantelis.mynotesapp.view.viewmodels.NoteDataViewModel
 import com.nile.pantelis.mynotesapp.view.viewmodels.SwitchScreenViewModel
 
 @Composable
 fun ScreenSelector(
-    viewModel: SwitchScreenViewModel,
-    modifier: Modifier
+    switchScreenViewModel: SwitchScreenViewModel,
+    modifier: Modifier,
+    notesViewModel: NoteDataViewModel
 ) {
     Box(
         modifier = modifier
     ) {
 
-        when (viewModel.currentState()) {
+        when (switchScreenViewModel.currentState()) {
             AppState.WriteScreen -> {
-                NoteScreen(viewModel = viewModel)
+                NoteScreen(
+                    switchScreenViewModel = switchScreenViewModel,
+                    notesViewModel = notesViewModel
+                )
             }
 
             AppState.ViewScreen -> {
-                MainNotesList(viewModel = viewModel)
+                MainNotesList(
+                    switchScreenViewModel = switchScreenViewModel,
+                    notesViewModel = notesViewModel
+                )
             }
         }
     }

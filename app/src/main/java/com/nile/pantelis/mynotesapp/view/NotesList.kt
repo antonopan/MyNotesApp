@@ -34,6 +34,7 @@ fun NotesList(
                 switchScreenViewModel.switchScreen(AppState.WriteScreen)
                 noteViewModel.onTitleChange(note.title)
                 noteViewModel.onContentChange(note.content)
+                noteViewModel.selectNote(note)
 //                noteViewModel.onColorChange(note.Color)
             }) // Your composable for displaying a Note
         }

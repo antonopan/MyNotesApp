@@ -22,6 +22,7 @@ fun MainNotesList(
                     switchScreenViewModel.switchScreen(AppState.WriteScreen, )
                     notesViewModel.onTitleChange("Add Title")
                     notesViewModel.onContentChange("Add Contents")
+                    notesViewModel.createNewNote()
                 }
             )
         })

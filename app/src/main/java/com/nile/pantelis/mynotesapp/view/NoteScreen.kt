@@ -18,6 +18,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -29,11 +30,9 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.nile.pantelis.mynotesapp.MainActivity
 import com.nile.pantelis.mynotesapp.domain.AppState
 import com.nile.pantelis.mynotesapp.view.viewmodels.NoteDataViewModel
 import com.nile.pantelis.mynotesapp.view.viewmodels.SwitchScreenViewModel
@@ -50,12 +49,20 @@ fun NoteScreen(
 
     val note by notesViewModel.currentNote.collectAsState()
 
+    DisposableEffect(Unit) {
+        notesViewModel.startAutoSave()
+
+        onDispose {
+            notesViewModel.stopAutoSave()
+        }
+    }
+
     Box(
         modifier = modifier
             .fillMaxSize()
             .padding(12.dp)
             .clip(RoundedCornerShape(12.dp))
-            .background(Color((note?.color ?: 0xFF2C2C2E)))
+            .background(Color((note?.color?.toInt() ?: 0xFF2C2C2E.toInt())))
 
     ) {
         Column(
@@ -72,7 +79,7 @@ fun NoteScreen(
 
             TextField(
                 value = note?.title ?:
-                "notesViewModel.defaultNote.title",
+                "",
                 onValueChange = notesViewModel:: onTitleChange,
                 placeholder = { Text("Enter your title") },
                 maxLines = 2,
@@ -94,7 +101,7 @@ fun NoteScreen(
 
             TextField(
                 value = notesViewModel.currentNote.value?.content ?:
-                notesViewModel.defaultNote.content,
+                "",
                 onValueChange = { notesViewModel.onContentChange(it) },
                 placeholder = { Text("Start typing...") },
                 modifier = Modifier
@@ -120,7 +127,12 @@ fun NoteScreen(
             BottomBar(
                 onColorButtonPressed = { openModal = true },
                 onTextFormatPressed = {},
-                onMenuPressed = {}
+                onMenuPressed = {
+                    notesViewModel.deleteNote() {
+                        switchScreenViewModel.switchScreen(state = AppState.ViewScreen)
+                    }
+//                    switchScreenViewModel.switchScreen(state = AppState.ViewScreen)
+                }
             )
         }
     }

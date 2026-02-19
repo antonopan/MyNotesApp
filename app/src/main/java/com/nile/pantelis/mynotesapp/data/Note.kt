@@ -11,5 +11,5 @@ data class Note(
     val title: String = "Zouzounia",
     val content: String = "Foo",
     val category: String? = null,
-    val color: Long = 0xFF2C2C2E
+    val color: Long = 0xFF2C2C2E.toLong()
 )

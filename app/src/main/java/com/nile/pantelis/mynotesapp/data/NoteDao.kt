@@ -13,11 +13,11 @@ interface NoteDao {
     fun getAll(): Flow<List<Note>>
 
     @Query("SELECT * FROM notes WHERE id = :noteId")
-    fun getById(noteId: Int): Note
+    suspend fun getById(noteId: Int): Note
 
     @Upsert
-    suspend fun upsertNote(note: Note)
+    suspend fun upsertNote(note: Note): Long
 
     @Delete
-    fun delete(note: Note)
+    suspend fun delete(note: Note): Int
 }

@@ -1,5 +1,6 @@
 package com.nile.pantelis.mynotesapp.view
 
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
@@ -83,8 +84,11 @@ fun ColorPicker(
                             .clip(CircleShape)
                             .background(color = colors[i])
                             .size(42.dp)
-                            .clickable(onClick = { notesViewModel.onColorChange(colors[i])})
-                        ,
+                            .clickable(onClick = {
+                                notesViewModel.onColorChange(colors[i])
+                                Log.d("Color", "${notesViewModel.currentNote.value!!.color}")
+                            }
+                            ),
                     ){
 
                     }

@@ -28,7 +28,7 @@ fun NoteCard(
             .fillMaxSize()
             .aspectRatio(1f)
             .clip(shape = RoundedCornerShape(8.dp))
-            .background(color = Color.Gray)
+            .background(Color((note.color.toInt())))
             .padding(4.dp)
             .clickable(
                 onClick = {
@@ -37,8 +37,7 @@ fun NoteCard(
             )
 
     ){
-        Column(
-        ) {
+        Column {
             Text(
                 note.title,
                 fontWeight = FontWeight.Bold

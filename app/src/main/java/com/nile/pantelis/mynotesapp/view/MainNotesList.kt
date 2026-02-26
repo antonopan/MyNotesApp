@@ -1,7 +1,6 @@
 package com.nile.pantelis.mynotesapp.view
 
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -19,16 +18,15 @@ fun MainNotesList(
         floatingActionButton = {
             AddButton(
                 onClick = {
-                    switchScreenViewModel.switchScreen(AppState.WriteScreen, )
+                    switchScreenViewModel.switchScreen(AppState.WriteScreen)
                     notesViewModel.onTitleChange("Add Title")
                     notesViewModel.onContentChange("Add Contents")
                     notesViewModel.createNewNote()
                 }
             )
         })
-    { innerPadding ->
+    { _ ->
         NotesList(
-            modifier = Modifier.padding(innerPadding),
             notes = notesViewModel.getAllNotes,
             switchScreenViewModel = switchScreenViewModel,
             notesViewModel = notesViewModel

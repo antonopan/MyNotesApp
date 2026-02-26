@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
@@ -31,35 +32,45 @@ fun BottomBar(
         Row(verticalAlignment = Alignment.CenterVertically) {
             Button(
                 onClick = onColorButtonPressed,
-                modifier = Modifier.padding(3.dp)
+                modifier = Modifier.padding(3.dp),
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = MaterialTheme.colorScheme.onPrimary,
+                )
             ) {
                 Icon(
                     painter = painterResource(R.drawable.palette),
                     contentDescription = "palette",
-                    tint = MaterialTheme.colorScheme.onPrimary // uses theme
+                    tint = MaterialTheme.colorScheme.onBackground
                 )
             }
 
             Button(
-                onClick = onTextFormatPressed, // fixed callback
-                modifier = Modifier.padding(3.dp)
+                onClick = onTextFormatPressed,
+                modifier = Modifier.padding(3.dp),
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = MaterialTheme.colorScheme.onPrimary,
+                )
             ) {
                 Icon(
                     painter = painterResource(R.drawable.text_format),
                     contentDescription = "text_format",
-                    tint = MaterialTheme.colorScheme.onPrimary
+                    tint = MaterialTheme.colorScheme.onBackground
                 )
             }
         }
 
         Button(
             onClick = onMenuPressed,
-            modifier = Modifier.padding(3.dp)
+            modifier = Modifier
+                .padding(3.dp),
+            colors = ButtonDefaults.buttonColors(
+                containerColor = MaterialTheme.colorScheme.onPrimary,
+            )
         ) {
             Icon(
-                painter = painterResource(R.drawable.menu),
-                contentDescription = "menu",
-                tint = MaterialTheme.colorScheme.onPrimary
+                painter = painterResource(R.drawable.delete),
+                contentDescription = "delete",
+                tint = MaterialTheme.colorScheme.onBackground
             )
         }
     }

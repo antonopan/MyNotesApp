@@ -19,7 +19,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import com.nile.pantelis.mynotesapp.MainActivity
 import com.nile.pantelis.mynotesapp.view.viewmodels.NoteDataViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -36,12 +35,9 @@ fun ColorPicker(
         skipPartiallyExpanded = true
     )
 
-    // Use LaunchedEffect to handle the programmatic closing when the parent state changes to false
-    LaunchedEffect(visible) {
+    LaunchedEffect(true) {
         if (!visible) {
-            // This will trigger the collapse animation within the ModalBottomSheet logic
             sheetState.hide()
-            // closeModal() is called by the onDismissRequest callback when the animation finishes
         }
     }
 
@@ -63,18 +59,17 @@ fun ColorPicker(
             contentAlignment = Alignment.Center
         ) {
             val colors = listOf(
-                Color(0xFFFF0000), // Red
-                Color(0xFFFF7F00), // Orange
-                Color(0xFFFFFF00), // Yellow
-                Color(0xFF7FFF00), // Chartreuse
-                Color(0xFF00FF00), // Green
-                Color(0xFF00FF7F), // Spring Green
-                Color(0xFF00FFFF), // Cyan
-                Color(0xFF007FFF), // Azure
-                Color(0xFF0000FF), // Blue
-                Color(0xFF7F00FF), // Violet
-                Color(0xFFFF00FF), // Magenta
-                Color(0xFFFF007F)  // Rose
+                Color(0x86FF0000), // Red
+                Color(0x86FF7F00), // Orange
+                Color(0xBAFFFB00), // Yellow
+                Color(0x86088008), // Green
+                Color(0x8604F681), // Spring Green
+                Color(0x8600FFFF), // Cyan
+                Color(0x86007FFF), // Azure
+                Color(0xFF3A3A3C), // Blue
+//                Color(0x867F00FF), // Violet
+                Color(0x86FF00FF), // Magenta
+                Color(0x86FF007F)  // Rose
             )
             FlowRow (modifier = Modifier.padding(32.dp)) {
                 for (i in 0..9) {
@@ -82,6 +77,7 @@ fun ColorPicker(
                         modifier = Modifier
                             .padding(8.dp)
                             .clip(CircleShape)
+                            .background(color = Color.Gray)
                             .background(color = colors[i])
                             .size(42.dp)
                             .clickable(onClick = {

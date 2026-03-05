@@ -11,7 +11,6 @@ class SwitchScreenViewModel(): ViewModel() {
     private var _screenState by mutableStateOf(AppState.ViewScreen)
     fun switchScreen(state: AppState) {
         this._screenState = state
-        Log.d("TESTING", "YOLANDA")
     }
 
     fun currentState(): AppState {

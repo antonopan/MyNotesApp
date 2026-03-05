@@ -137,6 +137,8 @@ fun NoteScreen(
 }
 
 private fun changeModal(openModal: Boolean): Boolean {
-    openModal != openModal
-    return openModal
+//    openModal != openModal
+    return !openModal
 }
+
+

@@ -35,7 +35,7 @@ fun ColorPicker(
         skipPartiallyExpanded = true
     )
 
-    LaunchedEffect(true) {
+    LaunchedEffect(visible) {
         if (!visible) {
             sheetState.hide()
         }
@@ -82,7 +82,6 @@ fun ColorPicker(
                             .size(42.dp)
                             .clickable(onClick = {
                                 notesViewModel.onColorChange(colors[i])
-                                Log.d("Color", "${notesViewModel.currentNote.value!!.color}")
                             }
                             ),
                     ){

@@ -70,7 +70,6 @@ class NoteDataViewModel(private val db: NoteDatabase) : ViewModel() {
         viewModelScope.launch {
             db.dao().getAll().collect { list ->
                 getAllNotes = list
-                Log.d("DB NOTES", list.toString())
             }
         }
     }

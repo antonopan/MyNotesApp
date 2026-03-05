@@ -43,20 +43,6 @@ fun BottomBar(
                     tint = MaterialTheme.colorScheme.onBackground
                 )
             }
-
-            Button(
-                onClick = onTextFormatPressed,
-                modifier = Modifier.padding(3.dp),
-                colors = ButtonDefaults.buttonColors(
-                    containerColor = MaterialTheme.colorScheme.onPrimary,
-                )
-            ) {
-                Icon(
-                    painter = painterResource(R.drawable.text_format),
-                    contentDescription = "text_format",
-                    tint = MaterialTheme.colorScheme.onBackground
-                )
-            }
         }
 
         Button(
